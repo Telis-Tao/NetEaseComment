@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/icon"/>
+
+
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_toRightOf="@+id/icon"
+        android:text="stevan耳麦"
+        android:textColor="#5F9AD5"
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/locale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/id"
+        android:layout_below="@+id/id"
+        android:text="网易浙江温州手机网友"
+        android:textSize="16sp"
+        />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/locale"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/locale"
+        android:text="一小时前"
+        android:textSize="16sp"
+        />
+
+    <ImageView
+        android:id="@+id/vote_image"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/id"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/vote"/>
+
+    <TextView
+        android:id="@+id/vote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/id"
+        android:layout_toLeftOf="@+id/vote_image"
+        android:text="296"/>
+
+    <com.bupt.telis.neteasecomment.ExtraView
+        android:id="@+id/extra_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/id"
+        android:layout_below="@+id/locale"
+        android:layout_marginRight="20dp"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/id"
+        android:layout_below="@id/extra_view"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="5"
+        android:text="@string/comment"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        />
+
+
+</RelativeLayout>

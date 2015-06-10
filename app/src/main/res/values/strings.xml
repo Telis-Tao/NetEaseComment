@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NetEaseComment</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="comment">现在的本科生多如牛毛，出来也不太好找工作。家长们堵路就不应该了，人家司机又没惹你们，搞得好像自己的孩子个个都能考上一本似的。</string>
+    <color name="id_color">#5F9AD5</color>
+</resources>
