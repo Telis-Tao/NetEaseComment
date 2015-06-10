@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "comments.db";
 
     public static final String CREATE_USER = "create table user (_id varchar(16) primary key " +
-            ", name varchar(16),icon BLOB,title varchar(16),locale varchar(16))";
+            ", name varchar(16),voted BLOB,title varchar(16),locale varchar(16))";
 
     @Override
     public void onCreate(SQLiteDatabase db) {

@@ -16,18 +16,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //        SQLiteDatabase db = Connector.getDatabase();
         ListView mListView = (ListView) findViewById(R.id.list_view);
         List<Comment> list = new ArrayList<>();
         list.add(new Comment());
         list.add(new Comment());
         list.add(new Comment());
         mListView.setAdapter(new CommentListAdapter(this, list));
-        //        if (user.save()) {
-        //            Toast.makeText(this, "存储成功", Toast.LENGTH_SHORT).show();
-        //        } else {
-        //            Toast.makeText(this, "存储失败", Toast.LENGTH_SHORT).show();
-        //        }
     }
 
     private void initData() {

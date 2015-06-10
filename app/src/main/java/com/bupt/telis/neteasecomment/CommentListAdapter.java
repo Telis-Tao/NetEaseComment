@@ -54,6 +54,7 @@ public class CommentListAdapter extends BaseAdapter {
             viewHolder.voteUp = (TextView) view.findViewById(R.id.vote_up);
             viewHolder.briefComment = (ExtraView) view.findViewById(R.id.extra_view);
             viewHolder.voteImage = (ImageView) view.findViewById(R.id.vote_image);
+            viewHolder.icon = (CircleImageView) view.findViewById(R.id.icon);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -69,7 +70,7 @@ public class CommentListAdapter extends BaseAdapter {
                 int count;
                 if (!isClicked) {
                     animPlay();
-                    imageView.setImageResource(R.drawable.icon);
+                    imageView.setImageResource(R.drawable.voted);
                     count = Integer.valueOf(viewHolder.vote.getText().toString());
                     count++;
                     isClicked = true;
@@ -114,6 +115,7 @@ public class CommentListAdapter extends BaseAdapter {
         viewHolder.time.setText(comment.getCreateTime().toString());
         viewHolder.vote.setText(String.valueOf(comment.getVote()));
         viewHolder.comment.setText(comment.getContent());
+        viewHolder.icon.setBackgroundResId(comment.getAuthor().getIcon());
         if (comment.getBriefComments().size() > 0) {
             viewHolder.briefComment.setVisibility(View.VISIBLE);
             viewHolder.briefComment.setComments(comment.getBriefComments());
@@ -129,6 +131,7 @@ public class CommentListAdapter extends BaseAdapter {
         ExtraView briefComment;
         ImageView voteImage;
         TextView voteUp;
+        CircleImageView icon;
     }
 
 

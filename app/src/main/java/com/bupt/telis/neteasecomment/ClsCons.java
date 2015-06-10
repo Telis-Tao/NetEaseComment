@@ -30,9 +30,6 @@ public class ClsCons {
                     "第三个参数：CursorFactory类型 " +
                     "第四个参数：int类型，数据库版本" +
                     "下面是这个类的几个方法： "};
-/*    *//*
-    用户头像的资源ID数组：用来模拟不同的用户头像
-     *//*
-    public static final String[] DEFAULT_NICK_RESID = {String.valueOf(R.drawable.nick1), String
-            .valueOf(R.drawable.nick2), String.valueOf(R.drawable.nick3)};*/
+
+    public static final int[] ICON = {R.drawable.icon, R.drawable.icon1, R.drawable.icon2};
 }
