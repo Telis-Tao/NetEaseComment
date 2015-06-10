@@ -1,5 +1,6 @@
 package com.bupt.telis.neteasecomment;
 
+import android.animation.*;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
+ * 评论列表的适配器，重要类
  * Created by Telis on 2015/6/9.
  */
 public class CommentListAdapter extends BaseAdapter {
@@ -49,9 +51,9 @@ public class CommentListAdapter extends BaseAdapter {
             viewHolder.time = (TextView) view.findViewById(R.id.time);
             viewHolder.vote = (TextView) view.findViewById(R.id.vote);
             viewHolder.comment = (TextView) view.findViewById(R.id.comment);
+            viewHolder.voteUp = (TextView) view.findViewById(R.id.vote_up);
             viewHolder.briefComment = (ExtraView) view.findViewById(R.id.extra_view);
             viewHolder.voteImage = (ImageView) view.findViewById(R.id.vote_image);
-            //            viewHolder.viewStub = (ViewStub) view.findViewById(R.id.view_stub);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -59,13 +61,47 @@ public class CommentListAdapter extends BaseAdapter {
         }
         initView(position, viewHolder);
         viewHolder.voteImage.setOnClickListener(new View.OnClickListener() {
+            private boolean isClicked = false;
+
             @Override
             public void onClick(View v) {
                 ImageView imageView = (ImageView) v;
-                imageView.setImageResource(R.drawable.icon);
-                int count = Integer.valueOf(viewHolder.vote.getText().toString());
-                count++;
+                int count;
+                if (!isClicked) {
+                    animPlay();
+                    imageView.setImageResource(R.drawable.icon);
+                    count = Integer.valueOf(viewHolder.vote.getText().toString());
+                    count++;
+                    isClicked = true;
+                } else {
+                    imageView.setImageResource(R.drawable.vote);
+                    count = Integer.valueOf(viewHolder.vote.getText().toString());
+                    count--;
+                    isClicked = false;
+                }
                 viewHolder.vote.setText(String.valueOf(count));
+            }
+
+            /**
+             * +1 的动画
+             */
+            private void animPlay() {
+                viewHolder.voteUp.setVisibility(View.VISIBLE);
+                ObjectAnimator up = ObjectAnimator.ofFloat(viewHolder.voteUp, "translationY",
+                        -40f);
+                ObjectAnimator fade = ObjectAnimator.ofFloat(viewHolder.voteUp, "alpha",
+                        0f);
+                AnimatorSet set = new AnimatorSet();
+                set.play(up).with(fade);
+                set.start();
+                set.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        viewHolder.voteUp.setTranslationY(0f);
+                        viewHolder.voteUp.setAlpha(1);
+                        viewHolder.voteUp.setVisibility(View.INVISIBLE);
+                    }
+                });
             }
         });
         return view;
@@ -92,6 +128,7 @@ public class CommentListAdapter extends BaseAdapter {
         TextView comment;
         ExtraView briefComment;
         ImageView voteImage;
+        TextView voteUp;
     }
 
 
