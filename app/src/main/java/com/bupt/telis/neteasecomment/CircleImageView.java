@@ -1,5 +1,6 @@
 package com.bupt.telis.neteasecomment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -9,9 +10,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+
+import java.lang.ref.SoftReference;
 
 /**
  * Created by Telis on 2015/6/10.
@@ -23,10 +25,9 @@ public class CircleImageView extends ImageView {
     private Paint maskPaint;
     private Paint srcPaint;
     private Canvas tmp;
-    //    private WeakReference<Bitmap> src;
-    private Bitmap srcBitmap;
+    private SoftReference<Bitmap> src;
+    //    private Bitmap srcBitmap;
     private Bitmap bitmap;
-    private BitmapDrawable drawable;
     private int length;
 
     public CircleImageView(Context context) {
@@ -43,8 +44,7 @@ public class CircleImageView extends ImageView {
             switch (attr) {
                 case R.styleable.CircleImageView_background_src:
                     resId = a.getResourceId(attr, 0);
-                    options = new BitmapFactory.Options();
-
+                    //                    options = new BitmapFactory.Options();
                     break;
             }
         }
@@ -62,27 +62,36 @@ public class CircleImageView extends ImageView {
     }
 
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
-        if (bitmap == null) {
+        if (options == null) {
+            options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
-            srcBitmap = BitmapFactory.decodeResource(getResources(), resId, options);
+            BitmapFactory.decodeResource(getResources(), resId, options);
             int height = options.outHeight;
             int width = options.outWidth;
             int min = Math.min(height, width);
             options.inSampleSize = min / length;
             options.inJustDecodeBounds = false;
-            srcBitmap = BitmapFactory.decodeResource(getResources(), resId, options);
-            //            BitmapFactory.Options options = new BitmapFactory.Options();
-            //            srcBitmap = BitmapFactory.decodeResource(getResources(), resId);
-            bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
-            radius = length / 2;
-            tmp = new Canvas(bitmap);
         }
+        if (src == null) {
+            src = new SoftReference<>(BitmapFactory.decodeResource(getResources(), resId,
+                    options));
+        }
+        if (src.get() == null) {
+            src = new SoftReference<>(BitmapFactory.decodeResource(getResources(), resId,
+                    options));
+        }
+        bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
+        radius = length / 2;
+        tmp = new Canvas(bitmap);
         tmp.drawCircle(radius, radius, radius, maskPaint);
-        tmp.drawBitmap(srcBitmap, radius - srcBitmap.getWidth() / 2, radius - srcBitmap
+        tmp.drawBitmap(src.get(), radius - src.get().getWidth() / 2, radius - src.get()
                 .getHeight() / 2, srcPaint);
         canvas.drawBitmap(bitmap, 0, 0, null);
+        bitmap.recycle();
+        bitmap = null;
     }
 
     public void setBackgroundResId(int backgroundResId) {
