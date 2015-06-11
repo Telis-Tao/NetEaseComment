@@ -38,8 +38,8 @@ public class Comment {
         createTime = new Date();
         content = ClsCons.COMMENTS[random.nextInt(ClsCons.COMMENTS.length)];
         briefComments = new ArrayList<>();
-
-        for (int i = 0; i < random.nextInt(2); i++) {
+        //        random.nextInt(4)
+        for (int i = 0; i < 4; i++) {
             briefComments.add(new BriefComment());
         }
     }

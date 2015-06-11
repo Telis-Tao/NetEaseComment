@@ -18,9 +18,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ListView mListView = (ListView) findViewById(R.id.list_view);
         List<Comment> list = new ArrayList<>();
-        list.add(new Comment());
-        list.add(new Comment());
-        list.add(new Comment());
+        for (int i = 0; i < 8; i++) {
+            list.add(new Comment());
+        }
         mListView.setAdapter(new CommentListAdapter(this, list));
     }
 

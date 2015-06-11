@@ -17,8 +17,9 @@ import java.util.List;
  */
 public class ExtraView extends LinearLayout {
     public static final int PADDING = 5;
-    private final Drawable drawable;
+    private Drawable drawable;
     private Context context;
+    private List<BriefComment> comments;
     //    private View view;
     //    private TextView idTextView;
     //    private TextView countTextView;
@@ -33,19 +34,57 @@ public class ExtraView extends LinearLayout {
         super(context, attrs);
         this.context = context;
         setOrientation(VERTICAL);
-        drawable = context.getResources().getDrawable(R.drawable.biankuang);
+        drawable = getResources().getDrawable(R.drawable.biankuang);
     }
 
     public void setComments(List<BriefComment> comments) {
         //remove this method induces a bug.
+        this.comments = comments;
         removeAllViews();
-        for (int i = 0; i < comments.size(); i++) {
-            addView(getView(comments.get(i), i, comments.size()));
+        int size = comments.size();
+        if (size > 3) {
+            addView(getView(comments.get(0), 0, 0, 3));
+            addView(getMoreView(1, 3));
+            addView(getView(comments.get(size - 1), size - 1, 3, 3));
+        } else {
+            for (int i = 0; i < size; i++) {
+                addView(getView(comments.get(i), i, i, size));
+            }
         }
     }
 
+    public void showAllView() {
+        removeAllViews();
+        int size = comments.size();
+        for (int i = 0; i < size; i++) {
+            addView(getView(comments.get(i), i, i, size));
+        }
+    }
 
-    private View getView(BriefComment comment, int index, int count) {
+    private View getMoreView(int index, int size) {
+        View view = LayoutInflater.from(context).inflate(R.layout.more_comments, null);
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        int margin = (size - index) * PADDING;
+        params.setMargins(margin, 0, margin, 0);
+        view.setLayoutParams(params);
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAllView();
+            }
+        });
+        return view;
+    }
+
+    /**
+     * @param comment 评论
+     * @param index   楼层数字-1
+     * @param count   在View 中处于第几个
+     * @param size    View 中显示楼层的总数
+     * @return return a View
+     */
+    private View getView(BriefComment comment, int index, int count, int size) {
         View view = LayoutInflater.from(context).inflate(R.layout.extra_comment, null);
         TextView idTextView = (TextView) view.findViewById(R.id.brief_id);
         TextView countTextView = (TextView) view.findViewById(R.id.brief_count);
@@ -55,7 +94,7 @@ public class ExtraView extends LinearLayout {
         contentTextView.setText(comment.getContent());
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        int margin = (count - index) * PADDING;
+        int margin = (size - count) * PADDING;
         params.setMargins(margin, 0, margin, 0);
         view.setLayoutParams(params);
         return view;
@@ -63,7 +102,7 @@ public class ExtraView extends LinearLayout {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
-/*
+        /*
         在FloorView绘制子控件前先绘制层叠的背景图片
          */
         for (int i = getChildCount() - 1; i >= 0; i--) {
