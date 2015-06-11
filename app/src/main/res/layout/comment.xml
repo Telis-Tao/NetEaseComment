@@ -4,13 +4,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
     <com.bupt.telis.neteasecomment.CircleImageView
         android:id="@+id/icon"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="10dp"
         app:background_src="@drawable/icon"/>
-
+    <!--这里放在icon 下面是因为渲染的原因，如果放在下面，那么显示就会在最上面-->
+    <ViewStub
+        android:id="@+id/view_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/id"
+        android:layout="@layout/comment_label"/>
 
     <TextView
         android:id="@+id/id"

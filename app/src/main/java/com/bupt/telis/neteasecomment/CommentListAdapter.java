@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import java.util.List;
 public class CommentListAdapter extends BaseAdapter {
     List<Comment> list;
     Context context;
+    ViewHolder viewHolder;
 
     public CommentListAdapter(Context context, List<Comment> list) {
         this.context = context;
@@ -42,7 +44,6 @@ public class CommentListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
-        final ViewHolder viewHolder;
         if (convertView == null) {
             view = LayoutInflater.from(context).inflate(R.layout.comment, null);
             viewHolder = new ViewHolder();
@@ -55,6 +56,7 @@ public class CommentListAdapter extends BaseAdapter {
             viewHolder.briefComment = (ExtraView) view.findViewById(R.id.extra_view);
             viewHolder.voteImage = (ImageView) view.findViewById(R.id.vote_image);
             viewHolder.icon = (CircleImageView) view.findViewById(R.id.icon);
+            viewHolder.viewStub = (ViewStub) view.findViewById(R.id.view_stub);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -120,18 +122,51 @@ public class CommentListAdapter extends BaseAdapter {
             viewHolder.briefComment.setVisibility(View.VISIBLE);
             viewHolder.briefComment.setComments(comment.getBriefComments());
         }
+        if (position == 0) {
+            viewHolder.viewStub.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.viewStub.setVisibility(View.GONE);
+        }
     }
 
     private class ViewHolder {
+        /**
+         * id
+         */
         TextView id;
+        /**
+         * location
+         */
         TextView locale;
+        /**
+         * post time
+         */
         TextView time;
+        /**
+         * vote number
+         */
         TextView vote;
-        TextView comment;
-        ExtraView briefComment;
         ImageView voteImage;
+        /**
+         * +1 TextView
+         */
         TextView voteUp;
+        /**
+         * comment
+         */
+        TextView comment;
+        /**
+         * reply comments
+         */
+        ExtraView briefComment;
+        /**
+         * icon
+         */
         CircleImageView icon;
+        /**
+         * hot comment pin
+         */
+        ViewStub viewStub;
     }
 
 

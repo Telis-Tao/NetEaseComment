@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -12,11 +13,16 @@ import java.util.List;
 
 public class MainActivity extends Activity {
 
+    private View hotView;
+    private int tmp;
+    private ListView mListView;
+    private boolean isVisiable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView mListView = (ListView) findViewById(R.id.list_view);
+        mListView = (ListView) findViewById(R.id.list_view);
         List<Comment> list = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             list.add(new Comment());
@@ -24,18 +30,6 @@ public class MainActivity extends Activity {
         mListView.setAdapter(new CommentListAdapter(this, list));
     }
 
-    private void initData() {
-        //        DBHelper helper = new DBHelper(this);
-        //        SQLiteDatabase database = helper.getWritableDatabase();
-        //        ContentValues values = new ContentValues();
-        //        User user = new User();
-        //        values.put(User.COLUMN_ID, user.getId());
-        //        values.put(User.COLUMN_NAME, user.getName());
-        //        values.put(User.COLUMN_LOCALE, user.getLocale());
-        //        database.insert("user", null, values);
-        //        Cursor query = database.query();
-        User user = new User();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

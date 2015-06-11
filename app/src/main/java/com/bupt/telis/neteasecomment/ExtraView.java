@@ -16,8 +16,15 @@ import java.util.List;
  * Created by Telis on 2015/6/9.
  */
 public class ExtraView extends LinearLayout {
-    public static final int PADDING = 5;
-    public static final int MAX_PADDING_NUMBER = 5;
+    /**
+     * frame distance
+     */
+    public static final int FRAME_MARGIN = 5;
+
+    /**
+     * max frame number
+     */
+    public static final int MAX_FRAME_NUMBER = 5;
     private Drawable drawable;
     private Context context;
     private List<BriefComment> comments;
@@ -71,7 +78,7 @@ public class ExtraView extends LinearLayout {
         }
         params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        int margin = (size - index) * PADDING;
+        int margin = (size - index) * FRAME_MARGIN;
         params.setMargins(margin, 0, margin, 0);
         view.setLayoutParams(params);
         view.setOnClickListener(new OnClickListener() {
@@ -100,11 +107,11 @@ public class ExtraView extends LinearLayout {
         contentTextView.setText(comment.getContent());
         params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        int margin = 0;
-        if (count > MAX_PADDING_NUMBER) {
-            margin = (size - MAX_PADDING_NUMBER) * PADDING;
+        int margin;
+        if (count > MAX_FRAME_NUMBER) {
+            margin = (size - MAX_FRAME_NUMBER) * FRAME_MARGIN;
         } else {
-            margin = (size - count) * PADDING;
+            margin = (size - count) * FRAME_MARGIN;
         }
         params.setMargins(margin, 0, margin, 0);
         view.setLayoutParams(params);
@@ -119,14 +126,14 @@ public class ExtraView extends LinearLayout {
         int top;
         for (int i = getChildCount() - 1; i >= 0; i--) {
             View view = getChildAt(i);
-            if (getChildCount() > MAX_PADDING_NUMBER) {
-                if (i > MAX_PADDING_NUMBER) {
-                    top = getChildAt(0).getTop() + MAX_PADDING_NUMBER * PADDING;
+            if (getChildCount() > MAX_FRAME_NUMBER) {
+                if (i > MAX_FRAME_NUMBER) {
+                    top = getChildAt(0).getTop() + MAX_FRAME_NUMBER * FRAME_MARGIN;
                 } else {
-                    top = getChildAt(0).getTop() + (MAX_PADDING_NUMBER - 1 - i) * PADDING;
+                    top = getChildAt(0).getTop() + (MAX_FRAME_NUMBER - 1 - i) * FRAME_MARGIN;
                 }
             } else {
-                top = getChildAt(0).getTop() + (getChildCount() - i) * PADDING;
+                top = getChildAt(0).getTop() + (getChildCount() - i) * FRAME_MARGIN;
             }
             drawable.setBounds(view.getLeft(), top, view.getRight(), view
                     .getBottom());

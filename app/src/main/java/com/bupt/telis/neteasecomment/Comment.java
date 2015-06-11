@@ -39,7 +39,7 @@ public class Comment {
         content = ClsCons.COMMENTS[random.nextInt(ClsCons.COMMENTS.length)];
         briefComments = new ArrayList<>();
         //        random.nextInt(4)
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < random.nextInt(10); i++) {
             briefComments.add(new BriefComment());
         }
     }
