@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class ExtraView extends LinearLayout {
     public static final int PADDING = 5;
+    public static final int MAX_PADDING_NUMBER = 5;
     private Drawable drawable;
     private Context context;
     private List<BriefComment> comments;
@@ -99,7 +100,12 @@ public class ExtraView extends LinearLayout {
         contentTextView.setText(comment.getContent());
         params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        int margin = (size - count) * PADDING;
+        int margin = 0;
+        if (count > MAX_PADDING_NUMBER) {
+            margin = (size - MAX_PADDING_NUMBER) * PADDING;
+        } else {
+            margin = (size - count) * PADDING;
+        }
         params.setMargins(margin, 0, margin, 0);
         view.setLayoutParams(params);
         return view;
@@ -110,9 +116,18 @@ public class ExtraView extends LinearLayout {
         /*
         在FloorView绘制子控件前先绘制层叠的背景图片
          */
+        int top;
         for (int i = getChildCount() - 1; i >= 0; i--) {
             View view = getChildAt(i);
-            int top = getChildAt(0).getTop() + (getChildCount() - i) * PADDING;
+            if (getChildCount() > MAX_PADDING_NUMBER) {
+                if (i > MAX_PADDING_NUMBER) {
+                    top = getChildAt(0).getTop() + MAX_PADDING_NUMBER * PADDING;
+                } else {
+                    top = getChildAt(0).getTop() + (MAX_PADDING_NUMBER - 1 - i) * PADDING;
+                }
+            } else {
+                top = getChildAt(0).getTop() + (getChildCount() - i) * PADDING;
+            }
             drawable.setBounds(view.getLeft(), top, view.getRight(), view
                     .getBottom());
             drawable.draw(canvas);
