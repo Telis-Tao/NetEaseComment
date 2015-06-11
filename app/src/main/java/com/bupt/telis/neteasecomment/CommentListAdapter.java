@@ -19,7 +19,7 @@ import java.util.List;
 public class CommentListAdapter extends BaseAdapter {
     List<Comment> list;
     Context context;
-    ViewHolder viewHolder;
+
 
     public CommentListAdapter(Context context, List<Comment> list) {
         this.context = context;
@@ -44,6 +44,7 @@ public class CommentListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view;
+        final ViewHolder viewHolder;
         if (convertView == null) {
             view = LayoutInflater.from(context).inflate(R.layout.comment, null);
             viewHolder = new ViewHolder();
