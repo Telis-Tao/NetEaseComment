@@ -59,6 +59,7 @@ public class CircleImageView extends ImageView {
         maskPaint.setAntiAlias(true);
         srcPaint = new Paint();
         srcPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+
     }
 
 
@@ -83,15 +84,16 @@ public class CircleImageView extends ImageView {
             src = new SoftReference<>(BitmapFactory.decodeResource(getResources(), resId,
                     options));
         }
-        bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
         radius = length / 2;
+        if (bitmap == null) {
+            bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
+        }
         tmp = new Canvas(bitmap);
         tmp.drawCircle(radius, radius, radius, maskPaint);
-        tmp.drawBitmap(src.get(), radius - src.get().getWidth() / 2, radius - src.get()
-                .getHeight() / 2, srcPaint);
+        tmp.drawBitmap(src.get(), radius - src.get().getWidth() / 2, radius -
+                src.get()
+                        .getHeight() / 2, srcPaint);
         canvas.drawBitmap(bitmap, 0, 0, null);
-        bitmap.recycle();
-        bitmap = null;
     }
 
     public void setBackgroundResId(int backgroundResId) {

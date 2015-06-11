@@ -45,7 +45,7 @@ public class ExtraView extends LinearLayout {
         if (size > 3) {
             addView(getView(comments.get(0), 0, 0, 3));
             addView(getMoreView(1, 3));
-            addView(getView(comments.get(size - 1), size - 1, 3, 3));
+            addView(getView(comments.get(size - 1), size - 1, 2, 3));
         } else {
             for (int i = 0; i < size; i++) {
                 addView(getView(comments.get(i), i, i, size));
@@ -61,9 +61,14 @@ public class ExtraView extends LinearLayout {
         }
     }
 
+    private View view;
+    private LayoutParams params;
+
     private View getMoreView(int index, int size) {
-        View view = LayoutInflater.from(context).inflate(R.layout.more_comments, null);
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.more_comments, null);
+        }
+        params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         int margin = (size - index) * PADDING;
         params.setMargins(margin, 0, margin, 0);
@@ -92,7 +97,7 @@ public class ExtraView extends LinearLayout {
         idTextView.setText(comment.getName());
         countTextView.setText(String.valueOf(index + 1));
         contentTextView.setText(comment.getContent());
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         int margin = (size - count) * PADDING;
         params.setMargins(margin, 0, margin, 0);
