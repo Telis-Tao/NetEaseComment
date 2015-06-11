@@ -86,7 +86,7 @@ public class CircleImageView extends ImageView {
         }
         radius = length / 2;
         if (bitmap == null) {
-            bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap(length, length, Bitmap.Config.ARGB_4444);
         }
         tmp = new Canvas(bitmap);
         tmp.drawCircle(radius, radius, radius, maskPaint);
