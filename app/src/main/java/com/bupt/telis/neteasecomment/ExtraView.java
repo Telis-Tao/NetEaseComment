@@ -2,6 +2,7 @@ package com.bupt.telis.neteasecomment;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -78,7 +79,7 @@ public class ExtraView extends LinearLayout {
         }
         params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        int margin = (size - index) * FRAME_MARGIN;
+        int margin = (size - index - 1) * FRAME_MARGIN;
         params.setMargins(margin, 0, margin, 0);
         view.setLayoutParams(params);
         view.setOnClickListener(new OnClickListener() {
@@ -109,9 +110,9 @@ public class ExtraView extends LinearLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         int margin;
         if (count > MAX_FRAME_NUMBER) {
-            margin = (size - MAX_FRAME_NUMBER) * FRAME_MARGIN;
+            margin = (size - MAX_FRAME_NUMBER - 1) * FRAME_MARGIN;
         } else {
-            margin = (size - count) * FRAME_MARGIN;
+            margin = (size - count - 1) * FRAME_MARGIN;
         }
         params.setMargins(margin, 0, margin, 0);
         view.setLayoutParams(params);
@@ -125,15 +126,18 @@ public class ExtraView extends LinearLayout {
          */
         int top;
         for (int i = getChildCount() - 1; i >= 0; i--) {
+            if (i == getChildCount() - 1) {
+                canvas.drawColor(Color.WHITE);
+            }
             View view = getChildAt(i);
             if (getChildCount() > MAX_FRAME_NUMBER) {
                 if (i > MAX_FRAME_NUMBER) {
-                    top = getChildAt(0).getTop() + MAX_FRAME_NUMBER * FRAME_MARGIN;
+                    top = getChildAt(0).getTop() + (MAX_FRAME_NUMBER - 1) * FRAME_MARGIN;
                 } else {
                     top = getChildAt(0).getTop() + (MAX_FRAME_NUMBER - 1 - i) * FRAME_MARGIN;
                 }
             } else {
-                top = getChildAt(0).getTop() + (getChildCount() - i) * FRAME_MARGIN;
+                top = getChildAt(0).getTop() + (getChildCount() - i - 1) * FRAME_MARGIN;
             }
             drawable.setBounds(view.getLeft(), top, view.getRight(), view
                     .getBottom());
